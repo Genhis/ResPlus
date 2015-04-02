@@ -1,0 +1,14 @@
+flag:
+  commands:
+    command:
+      default: false
+      type: whitelist
+      list:
+        - login
+        - register
+        - msg
+        - list
+        - r
+
+debug: false
+file_version: 0.3
