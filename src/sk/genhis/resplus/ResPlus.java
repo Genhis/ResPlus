@@ -46,6 +46,7 @@ public final class ResPlus extends GPlugin {
 		ResPlus.logger.log("Registrujem flagy pre plugin Residence");
 		FlagPermissions.addFlag("snowball");
 		FlagPermissions.addFlag("vehiclecreate");
+		FlagPermissions.addFlag("chorusport");
 		if(authme)
 			FlagPermissions.addFlag("antilogin");
 		if(chestshop) {

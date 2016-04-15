@@ -1,6 +1,7 @@
 package sk.genhis.resplus.listener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -11,6 +12,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import sk.genhis.glib.Message;
 import sk.genhis.resplus.ResPlus;
@@ -110,5 +113,22 @@ public final class BukkitListener implements Listener {
 			p.sendMessage(Message.NO_PERMISSION.toString());
 			e.setCancelled(true);
 		}
+	}
+	
+	@EventHandler()
+	public void onPlayerTeleport(PlayerTeleportEvent e) {
+		if(e.getCause().equals(TeleportCause.CHORUS_FRUIT)) {
+			final Player p = e.getPlayer();
+			final ClaimedResidence res = Residence.getResidenceManager().getByLoc(p.getLocation());
+			
+			if(res==null)
+				return;
+			
+			if(!res.getPermissions().playerHas(p.getName(), "chorusport", true)) {
+				p.sendMessage(ChatColor.RED+"Portovani pomoci Chorus fruitu je zde zakazano!");
+				e.setCancelled(true);
+			}
+		}
+			
 	}
 }
