@@ -1,7 +1,7 @@
 flag:
   commands:
     command:
-      default: false
+      default: true
       type: whitelist
       list:
         - login
@@ -9,6 +9,14 @@ flag:
         - msg
         - list
         - r
-
+        - sethome
+tp-owner-only: true
+christmas:
+  enable: false
+  year: 2016
+  month: 12
+  day: 24
+  hour: 17
+  minute: 30
 debug: false
 file_version: 0.3
