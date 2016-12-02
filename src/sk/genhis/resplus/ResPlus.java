@@ -1,5 +1,7 @@
 package sk.genhis.resplus;
 
+import java.util.Calendar;
+
 import org.bukkit.Bukkit;
 
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
@@ -10,9 +12,11 @@ import sk.genhis.glib.configuration.Config;
 import sk.genhis.glib.configuration.Configuration;
 import sk.genhis.glib.plugin.GPlugin;
 import sk.genhis.resplus.listener.AuthMeListener;
-import sk.genhis.resplus.listener.ChestShopListener;
 import sk.genhis.resplus.listener.BukkitListener;
+import sk.genhis.resplus.listener.ChestShopListener;
+import sk.genhis.resplus.listener.LWCListener;
 import sk.genhis.resplus.listener.MagicCarpetListener;
+import sk.genhis.resplus.listener.ResidenceListener;
 
 public final class ResPlus extends GPlugin {
 	private static GPlugin plugin;
@@ -27,14 +31,20 @@ public final class ResPlus extends GPlugin {
 		ResPlus.logger.log("Kontrolujem licenciu");
 		final LicenceChecker c = new LicenceChecker(this);
 		if(!c.checkLicence()) {
-			//c.unlicenced();
-			//return false;
+			c.unlicenced();
+			return false;
 		}
 		
 		ResPlus.logger.log("Kontrolujem pluginy pre integraciu");
 		boolean authme = Bukkit.getPluginManager().getPlugin("AuthMe") != null;
 		boolean chestshop = Bukkit.getPluginManager().getPlugin("ChestShop") != null;
 		boolean magiccarpet = Bukkit.getPluginManager().getPlugin("MagicCarpet") != null;
+		boolean lwc = Bukkit.getPluginManager().getPlugin("LWC") != null;
+		
+		boolean ownertp = config.getBoolean("tp-owner-only");
+		boolean christmas = config.getBoolean("christmas.enable");
+		final Calendar cl = Calendar.getInstance();
+		cl.set(config.getInt("christmas.year"), config.getInt("christmas.month")-1, config.getInt("christmas.day"), config.getInt("christmas.hour"), config.getInt("christmas.minute"));
 
 		if(authme)
 			ResPlus.logger.log("Zapinam integraciu s pluginom AuthMe");
@@ -56,9 +66,13 @@ public final class ResPlus extends GPlugin {
 		if(magiccarpet)
 			FlagPermissions.addFlag("magiccarpet");
 		
+		if(lwc && christmas)
+			FlagPermissions.addFlag("christmas");
+		
 		//registrujem vlastné flagy - príkazy
 		for(String key : ResPlus.getPlugin().getOwnConfig().getConfigurationSection("flag.commands").getKeys(false)) {
-			Bukkit.broadcastMessage(key);
+			//DEBUG
+			//Bukkit.broadcastMessage(key);
 			FlagPermissions.addFlag(key);
 		}
 		
@@ -70,6 +84,12 @@ public final class ResPlus extends GPlugin {
 			Bukkit.getPluginManager().registerEvents(new ChestShopListener(), this);
 		if(magiccarpet)
 			Bukkit.getPluginManager().registerEvents(new MagicCarpetListener(), this);
+		if(ownertp) {
+			logger.log("Povolovani teleportu pouze pro majitele resky...");
+			Bukkit.getPluginManager().registerEvents(new ResidenceListener(), this);
+		}
+		if(lwc && christmas)
+			Bukkit.getPluginManager().registerEvents(new LWCListener(cl), this);
 		return true;
 	}
 	
