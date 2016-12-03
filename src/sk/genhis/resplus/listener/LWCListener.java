@@ -25,7 +25,7 @@ public class LWCListener implements Listener {
 	public void onChestOpen(PlayerInteractEvent e) {
 		if(e.getClickedBlock() != null && e.getClickedBlock().getType().equals(Material.CHEST)) {
 			final ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getClickedBlock().getLocation());
-			if(res.getPermissions().has("christmas", false)) {
+			if(res != null && res.getPermissions().has("christmas", false)) {
 				if(LWC.getInstance().canAccessProtection(e.getPlayer(), e.getClickedBlock())) {
 					Calendar d = Calendar.getInstance();
 					if(d.before(c)) {
