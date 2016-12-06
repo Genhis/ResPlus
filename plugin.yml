@@ -4,4 +4,4 @@ website: http://genhis.6f.sk/
 depend: [GLib, Residence]
 softdepend: [AuthMe, ChestShop, MagicCarpet]
 main: sk.genhis.resplus.ResPlus
-version: 0.6.2
+version: 0.6.3
