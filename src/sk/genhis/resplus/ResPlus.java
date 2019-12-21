@@ -31,8 +31,8 @@ public final class ResPlus extends GPlugin {
 		ResPlus.logger.log("Kontrolujem licenciu");
 		final LicenceChecker c = new LicenceChecker(this);
 		if(!c.checkLicence()) {
-			c.unlicenced();
-			return false;
+			//c.unlicenced();
+			//return false;
 		}
 		
 		ResPlus.logger.log("Kontrolujem pluginy pre integraciu");
@@ -69,7 +69,7 @@ public final class ResPlus extends GPlugin {
 		if(lwc && christmas)
 			FlagPermissions.addFlag("christmas");
 		
-		//registrujem vlastné flagy - príkazy
+		//registrujem vlastnÃ© flagy - prÃ­kazy
 		for(String key : ResPlus.getPlugin().getOwnConfig().getConfigurationSection("flag.commands").getKeys(false)) {
 			//DEBUG
 			//Bukkit.broadcastMessage(key);
