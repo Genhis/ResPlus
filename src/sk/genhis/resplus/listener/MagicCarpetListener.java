@@ -1,6 +1,7 @@
 package sk.genhis.resplus.listener;
 
 import net.digiex.magiccarpet.MagicCarpet;
+import net.digiex.magiccarpet.Storage;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +18,9 @@ import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 public final class MagicCarpetListener implements Listener {
 	@EventHandler(priority=EventPriority.MONITOR)
 	public void onResidenceEnter(ResidenceChangedEvent e) {
-		if(e.getTo() != null && !e.getPlayer().hasPermission("residence.admin") && !e.getTo().getPermissions().playerHas(e.getPlayer().getName(), "magiccarpet", true) && MagicCarpet.getCarpets().has(e.getPlayer())) {
+		if(e.getTo() != null && !e.getPlayer().hasPermission("residence.admin") && !e.getTo().getPermissions().playerHas(e.getPlayer().getName(), "magiccarpet", true) && Storage.getCarpet(e.getPlayer()).isVisible()) {
 			e.getPlayer().sendMessage(Message.NO_PERMISSION.toString());
-			MagicCarpet.getCarpets().getCarpet(e.getPlayer()).hide();
+			Storage.getCarpet(e.getPlayer()).hide();
 		}
 	}
 	
@@ -29,7 +30,7 @@ public final class MagicCarpetListener implements Listener {
 			return;
 		
 		final Player p = e.getPlayer();
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(p.getLocation());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(p.getLocation());
 		if(res != null && !e.getPlayer().hasPermission("residence.admin") && !res.getPermissions().playerHas(p.getName(), "magiccarpet", true)) {
 			if(e.getMessage().startsWith("/mc") || e.getMessage().startsWith("/magiccarpet")) {
 				e.getPlayer().sendMessage(Message.NO_PERMISSION.toString());
