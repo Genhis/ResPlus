@@ -29,14 +29,14 @@ public class LWCListener implements Listener {
 	public void onChestOpen(PlayerInteractEvent e) {
 		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
 			if(e.getClickedBlock() != null && e.getClickedBlock().getType().equals(Material.CHEST)) {
-				final ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getClickedBlock().getLocation());
+				final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(e.getClickedBlock().getLocation());
 				if(res != null && res.getPermissions().has("christmas", false)) {
-					if(Residence.isResAdminOn(e.getPlayer()))
+					if(Residence.getInstance().isResAdminOn(e.getPlayer()))
 						return;
 					else if(!LWC.getInstance().findProtection(e.getClickedBlock()).isOwner(e.getPlayer()) && LWC.getInstance().canAccessProtection(e.getPlayer(), e.getClickedBlock())) {
 						Calendar d = Calendar.getInstance();
 						if(d.before(c)) {
-							e.getPlayer().sendMessage(ChatColor.RED+"Tato bedna pùjde otevøít až "+c.get(Calendar.DAY_OF_MONTH)+". "+(c.get(Calendar.MONTH)+1)+". "+c.get(Calendar.YEAR)+" v "+c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
+							e.getPlayer().sendMessage(ChatColor.RED+"Tato bedna pÅ¯jde otevÅ™Ã­t aÅ¾ "+c.get(Calendar.DAY_OF_MONTH)+". "+(c.get(Calendar.MONTH)+1)+". "+c.get(Calendar.YEAR)+" v "+c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
 							e.setCancelled(true);
 							return;
 						}
@@ -48,11 +48,11 @@ public class LWCListener implements Listener {
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getBlock().getLocation());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(e.getBlock().getLocation());
 		if(res != null && res.getPermissions().has("christmas", false)) {
-			if(Residence.isResAdminOn(e.getPlayer()))
+			if(Residence.getInstance().isResAdminOn(e.getPlayer()))
 				return;
-			else if(e.getBlockPlaced().getType().equals(Material.CHEST) || e.getBlockPlaced().getType().equals(Material.WALL_SIGN) || e.getBlockPlaced().getType().equals(Material.SIGN_POST))
+			else if(e.getBlockPlaced().getType().equals(Material.CHEST) || e.getBlockPlaced().getType().equals(Material.ACACIA_WALL_SIGN) || e.getBlockPlaced().getType().equals(Material.BIRCH_WALL_SIGN) || e.getBlockPlaced().getType().equals(Material.DARK_OAK_WALL_SIGN) || e.getBlockPlaced().getType().equals(Material.OAK_WALL_SIGN) || e.getBlockPlaced().getType().equals(Material.SPRUCE_WALL_SIGN) || e.getBlockPlaced().getType().equals(Material.JUNGLE_WALL_SIGN) || e.getBlockPlaced().getType().equals(Material.LEGACY_SIGN_POST))
 				return;
 			else
 				e.setCancelled(true);
@@ -61,11 +61,11 @@ public class LWCListener implements Listener {
 	
 	@EventHandler
 	public void onBlockDestroy(BlockBreakEvent e) {
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getBlock().getLocation());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(e.getBlock().getLocation());
 		if(res != null && res.getPermissions().has("christmas", false)) {
-			if(Residence.isResAdminOn(e.getPlayer()))
+			if(Residence.getInstance().isResAdminOn(e.getPlayer()))
 				return;
-			else if(e.getBlock().getType().equals(Material.CHEST) || e.getBlock().getType().equals(Material.WALL_SIGN) || e.getBlock().getType().equals(Material.SIGN_POST))
+			else if(e.getBlock().getType().equals(Material.CHEST) || e.getBlock().getType().equals(Material.ACACIA_WALL_SIGN) || e.getBlock().getType().equals(Material.BIRCH_WALL_SIGN) || e.getBlock().getType().equals(Material.DARK_OAK_WALL_SIGN) || e.getBlock().getType().equals(Material.OAK_WALL_SIGN) || e.getBlock().getType().equals(Material.SPRUCE_WALL_SIGN) || e.getBlock().getType().equals(Material.JUNGLE_WALL_SIGN) || e.getBlock().getType().equals(Material.LEGACY_SIGN_POST))
 				return;
 			else
 				e.setCancelled(true);
