@@ -19,7 +19,7 @@ public final class AuthMeListener implements Listener {
 	@EventHandler(priority=EventPriority.MONITOR)
 	public void teleport(AuthMeTeleportEvent e) {
 		final Player p = e.getPlayer();
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getTo());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(e.getTo());
 		if(res != null && !p.hasPermission("residence.admin") && res.getPermissions().playerHas(p.getName(), "antilogin", false)) {
 			GLib.getScheduler().scheduleSyncDelayedTask(ResPlus.getPlugin(), new GTask() {
 				public void run() {

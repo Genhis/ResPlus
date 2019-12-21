@@ -16,7 +16,7 @@ public final class ChestShopListener implements Listener {
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void preTransaction(PreTransactionEvent e) {
 		final Player p = e.getClient();
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(p.getLocation());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(p.getLocation());
 		if(res != null) {
 			boolean cancel = false;
 			
@@ -32,7 +32,7 @@ public final class ChestShopListener implements Listener {
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void preShopCreation(PreShopCreationEvent e) {
 		final Player p = e.getPlayer();
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(p.getLocation());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(p.getLocation());
 		if(res != null) {
 			boolean cancel = false;
 			

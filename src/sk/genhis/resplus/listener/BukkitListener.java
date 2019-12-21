@@ -28,7 +28,7 @@ public final class BukkitListener implements Listener {
 			return;
 		
 		final Player p = e.getPlayer();
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(p.getLocation());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(p.getLocation());
 		if(res != null) {
 			boolean cancel = false;
 			
@@ -86,7 +86,7 @@ public final class BukkitListener implements Listener {
 		if(!(e.getEntity() instanceof Player))
 			return;
 		final Player p = (Player)e.getEntity();
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(p.getLocation());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(p.getLocation());
 		
 		if(res == null)
 			return;
@@ -101,11 +101,11 @@ public final class BukkitListener implements Listener {
 	
 	@EventHandler()
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if(e.getAction() != Action.RIGHT_CLICK_BLOCK || e.getItem() == null || (e.getItem().getType() != Material.MINECART && e.getItem().getType() != Material.BOAT))
+		if(e.getAction() != Action.RIGHT_CLICK_BLOCK || e.getItem() == null || (e.getItem().getType() != Material.MINECART && e.getItem().getType() != Material.ACACIA_BOAT && e.getItem().getType() != Material.BIRCH_BOAT && e.getItem().getType() != Material.OAK_BOAT && e.getItem().getType() != Material.DARK_OAK_BOAT && e.getItem().getType() != Material.SPRUCE_BOAT && e.getItem().getType() != Material.JUNGLE_BOAT))
 			return;
 		
 		final Player p = e.getPlayer();
-		final ClaimedResidence res = Residence.getResidenceManager().getByLoc(p.getLocation());
+		final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(p.getLocation());
 		if(res == null)
 			return;
 		
@@ -119,7 +119,7 @@ public final class BukkitListener implements Listener {
 	public void onPlayerTeleport(PlayerTeleportEvent e) {
 		if(e.getCause().equals(TeleportCause.CHORUS_FRUIT)) {
 			final Player p = e.getPlayer();
-			final ClaimedResidence res = Residence.getResidenceManager().getByLoc(p.getLocation());
+			final ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(p.getLocation());
 			
 			if(res==null)
 				return;
